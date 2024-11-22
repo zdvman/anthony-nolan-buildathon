@@ -9,7 +9,13 @@ const anthropic = new Anthropic({
 
 export async function POST(req: NextRequest) {
   try {
-    const { systemPrompt, chatHistory } = await req.json();
+    const {
+      systemPrompt,
+      chatHistory,
+    }: {
+      systemPrompt: string;
+      chatHistory: Array<{ role: 'user' | 'assistant'; content: string }>;
+    } = await req.json();
 
     if (!systemPrompt || !chatHistory) {
       return NextResponse.json(
@@ -54,9 +60,9 @@ export async function POST(req: NextRequest) {
         Connection: 'keep-alive',
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || 'Internal Server Error' },
+      { error: (error as Error).message || 'Internal Server Error' },
       { status: 500 }
     );
   }
