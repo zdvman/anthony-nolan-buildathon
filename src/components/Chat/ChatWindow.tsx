@@ -42,7 +42,7 @@ const ChatWindow: React.FC = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
 
-      let aiMessage = { role: 'assistant', content: '' };
+      const aiMessage = { role: 'assistant', content: '' };
       setMessages((prev) => [...prev, aiMessage]);
 
       while (true) {
